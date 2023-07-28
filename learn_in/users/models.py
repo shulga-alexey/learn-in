@@ -1,48 +1,21 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
-class User(AbstractUser):
-
-    bio = models.TextField(
-        null=True,
-        blank=True,
-        verbose_name='описание'
-    )
-
-    class Meta:
-        ordering = ('username',)
-
-    def __str__(self):
-        return self.username
+from core.models import Base, User
 
 
-class Teacher(User):
-    """Пользователь «teacher», преподаватель."""
+class StudentGroup(Base):
+    """Учебная группа."""
 
-    student_groups = models.ManyToManyField(
-        'StudentGroup',
-        blank=True,
-        related_name='teachers',
-        verbose_name='учебные группы'
-    )
-    students = models.ManyToManyField(
-        'Student',
-        blank=True,
-        related_name='teachers',
-        verbose_name='студенты'
-    )
-
-    class Meta(User.Meta):
-        verbose_name = 'преподаватель'
-        verbose_name_plural = 'преподаватели'
+    class Meta(Base.Meta):
+        verbose_name = 'учебная группа'
+        verbose_name_plural = 'учебные группы'
 
 
 class Student(User):
     """Пользователь «student», студент."""
 
     student_groups = models.ManyToManyField(
-        'StudentGroup',
+        StudentGroup,
         blank=True,
         related_name='students',
         verbose_name='учебная группа'
@@ -53,28 +26,22 @@ class Student(User):
         verbose_name_plural = 'ученики'
 
 
-class StudentGroup(models.Model):
-    """Учебная группа."""
+class Teacher(User):
+    """Пользователь «teacher», преподаватель."""
 
-    title = models.CharField(
-        unique=True,
-        max_length=250,
-        verbose_name='название'
-    )
-    slug = models.SlugField(
-        unique=True,
-        verbose_name='слаг'
-    )
-    description = models.TextField(
-        null=True,
+    students = models.ManyToManyField(
+        'Student',
         blank=True,
-        verbose_name='описание'
+        related_name='teachers',
+        verbose_name='студенты'
+    )
+    student_groups = models.ManyToManyField(
+        'StudentGroup',
+        blank=True,
+        related_name='teachers',
+        verbose_name='учебные группы'
     )
 
-    class Meta:
-        ordering = ('title',)
-        verbose_name = 'учебная группа'
-        verbose_name_plural = 'учебные группы'
-
-    def __str__(self):
-        return self.title
+    class Meta(User.Meta):
+        verbose_name = 'преподаватель'
+        verbose_name_plural = 'преподаватели'

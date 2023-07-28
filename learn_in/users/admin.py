@@ -29,7 +29,7 @@ class UserAdmin(admin.ModelAdmin):
 
 class GroupAdmin(admin.ModelAdmin):
 
-    list_display = ('title', 'slug', 'get_teachers')
+    list_display = ('title', 'slug', 'get_teachers', 'created')
     search_fields = ('title', 'slug')
     ordering = ('title',)
     empty_value_display = '-empty-'
