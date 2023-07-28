@@ -3,6 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+    """Настроенная модель пользователя."""
 
     bio = models.TextField(
         null=True,
@@ -18,6 +19,7 @@ class User(AbstractUser):
 
 
 class Base(models.Model):
+    """Базовый класс для задач, а также групп студентов и задач."""
 
     title = models.CharField(
         unique=True,

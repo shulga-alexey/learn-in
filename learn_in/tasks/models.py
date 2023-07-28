@@ -11,6 +11,7 @@ class AcceptedManager(models.Manager):
 
 
 class TaskGroup(Base):
+    """Группа задач."""
 
     class Meta(Base.Meta):
         verbose_name = 'группа задач'
@@ -18,6 +19,7 @@ class TaskGroup(Base):
 
 
 class Task(Base):
+    """Задача, создаваемая преподавателем и назначаемая студентам."""
 
     class Status(models.TextChoices):
         """Статус задачи: разрешена/отклонена для публикации."""
@@ -69,6 +71,8 @@ class Task(Base):
 
 
 class AppointedTask(models.Model):
+    """Промежуточная таблица назначенных задач."""
+
     task = models.ForeignKey(
         Task,
         on_delete=models.CASCADE,
