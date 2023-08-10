@@ -1,0 +1,63 @@
+{% load static %}
+
+
+<nav class="navbar navbar-light" style="background-color: black">
+  <div class="container">
+    <a class="navbar-brand" href={% url 'index' %}>
+      <img src="{% static 'images/logo.jpg' %}"
+           width="30"
+           height="30"         
+           class="d-inline-block align-top" alt="">
+      <span style="color:blue">Learn</span><span style="color:white">-in</span>
+    </a>
+    {% with request.resolver_match.view_name as view_name %} 
+      <ul class="nav nav-pills">
+        <li class="nav-item"> 
+          <a class="nav-link
+            {% if view_name  == 'tasks:task-list' %}active{% endif %}"
+            href="{% url 'tasks:task-list' %}">
+            Tasks
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link
+            {% if view_name  == 'user:user-list' %}active{% endif %}"
+            href="{% url 'users:user-list' %}">
+            Users
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link link-light
+              {% if view_name  == 'auth:logout' %}active{% endif %}"
+              href="{% url 'auth:logout' %}">
+              Log-out
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link link-light
+              {% if view_name  == 'auth:logout' %}active{% endif %}"
+              href="{{ user.get_absolute_url }}">
+              {{ user.username }}
+            </a>
+          </li>
+        {% else %}
+          <li class="nav-item"> 
+            <a class="nav-link link-light
+              {% if view_name  == 'auth:login' %}active{% endif %}"
+              href="{% url 'auth:login' %}">
+              Log-in
+            </a>
+          </li>
+          <li class="nav-item"> 
+            <a class="nav-link link-light
+              {% if view_name  == 'auth:signup' %}active{% endif %}"
+              href="{% url 'auth:signup' %}">
+              Sign-up
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    {% endwith %} 
+  </div>
+</nav>

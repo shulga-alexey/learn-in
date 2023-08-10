@@ -1,10 +1,22 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 class User(AbstractUser):
     """Настроенная модель пользователя."""
 
+    class Role(models.TextChoices):
+        """Статус пользователя: преподаватель/студент."""
+        TEACHER = 'teacher'
+        STUDENT = 'student'
+
+    role = models.CharField(
+        max_length=7,
+        choices=Role.choices,
+        default=Role.STUDENT,
+        verbose_name='роль'
+    )
     bio = models.TextField(
         null=True,
         blank=True,
@@ -13,6 +25,9 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ('username',)
+
+    def get_absolute_url(self):
+        return reverse('users:user-detail', kwargs={'username': self.username})
 
     def __str__(self):
         return self.username
