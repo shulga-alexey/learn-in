@@ -33,11 +33,10 @@ class UserDetailView(DetailView):
         return getattr(user, 'student', getattr(user, 'teacher', None))
 
     def get_template_names(self):
-        return 'users/' + self.role + '_detail.html'
+        return 'users/' + self.object.role + '_detail.html'
 
     def get_context_object_name(self, obj):
-        self.role = self.get_object().__class__.__name__.lower()
-        return self.kwargs.get(self.role)
+        return obj.role
 
 
 class UserListView(ListView):
