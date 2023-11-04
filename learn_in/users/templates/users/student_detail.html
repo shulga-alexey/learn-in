@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Test title student
+{% endblock %}
+
+
+{% block content %}
+  <div class="container">
+    <div class="row" >
+      <div class="col-md-5 rounded-3 p-3  bg-dark">
+        <div class="row" >
+          <div class="col-md-3 bg-secondary text-white">
+            sdf
+          </div>
+          <div class="col-md-8 offset-md-1 text-white">
+            <p>{{ student.first_name }} {{ student.last_name }}</p>
+            <p>{{ student }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 offset-md-1  bg-dark">.col-md-4 .offset-md-4</div>
+    </div>
+  </div>
+{% endblock %}

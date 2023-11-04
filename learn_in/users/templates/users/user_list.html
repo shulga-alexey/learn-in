@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Test title users
+{% endblock %}
+
+
+{% block content %}
+  <h2>Users</h2>
+  <h3>Students</h3>
+  <ul>
+    {% for student in students %}
+      <li>
+        <a href="{{ student.get_absolute_url }}">
+          {{ student }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <h3>Teachers</h3>
+  <ul>
+    {% for teacher in teachers %}
+      <li>
+        <a href="{{ teacher.get_absolute_url }}">
+          {{ teacher }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
